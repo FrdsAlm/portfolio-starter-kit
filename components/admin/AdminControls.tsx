@@ -56,38 +56,43 @@ export function AdminControls({ slug, onRefresh }: AdminControlsProps) {
     window.location.reload();
   };
 
-  // Don't render anything while loading or if not admin
+  // Only show minimal controls on blog pages, redirect to admin for full management
   if (isLoading || !isAdmin) {
     return null;
   }
 
-  return (
-    <>
-      <div className="flex gap-2 mb-4">
-        {!slug && (
-          <AdminButton onClick={handleNewPost}>
-            + New Post
+  // For individual blog posts, show edit/delete
+  if (slug) {
+    return (
+      <>
+        <div className="flex gap-2 mb-4">
+          <AdminButton variant="secondary" onClick={handleEditPost}>
+            Edit
           </AdminButton>
-        )}
-        
-        {slug && (
-          <>
-            <AdminButton variant="secondary" onClick={handleEditPost}>
-              Edit
-            </AdminButton>
-            <AdminButton variant="danger" onClick={handleDeletePost}>
-              Delete
-            </AdminButton>
-          </>
-        )}
-      </div>
+          <AdminButton variant="danger" onClick={handleDeletePost}>
+            Delete
+          </AdminButton>
+          <AdminButton variant="secondary" onClick={() => window.location.href = '/admin/blog'}>
+            Admin Panel
+          </AdminButton>
+        </div>
 
-      <BlogEditor
-        isOpen={isEditorOpen}
-        onClose={() => setIsEditorOpen(false)}
-        slug={editingSlug}
-        onSave={handleSave}
-      />
-    </>
+        <BlogEditor
+          isOpen={isEditorOpen}
+          onClose={() => setIsEditorOpen(false)}
+          slug={editingSlug}
+          onSave={handleSave}
+        />
+      </>
+    );
+  }
+
+  // For blog listing page, just show link to admin
+  return (
+    <div className="flex gap-2 mb-4">
+      <AdminButton onClick={() => window.location.href = '/admin/blog'}>
+        Manage Blog Posts
+      </AdminButton>
+    </div>
   );
 }

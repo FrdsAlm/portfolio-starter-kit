@@ -15,11 +15,9 @@ export default function AdminPage() {
 
   const checkAuthStatus = async () => {
     try {
-      // Try to access a protected endpoint to check auth status
-      const response = await fetch('/api/blog', {
-        method: 'HEAD' // Just check headers, don't need full response
-      });
-      setIsLoggedIn(response.ok);
+      // Check if admin token exists in cookies (client-side)
+      const hasAdminToken = document.cookie.includes('admin-token=');
+      setIsLoggedIn(hasAdminToken);
     } catch (error) {
       setIsLoggedIn(false);
     } finally {
@@ -77,8 +75,8 @@ export default function AdminPage() {
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
               Create, edit, and delete blog posts
             </p>
-            <AdminButton onClick={() => window.location.href = '/blog'}>
-              Go to Blog
+            <AdminButton onClick={() => window.location.href = '/admin/blog'}>
+              Manage Blog Posts
             </AdminButton>
           </div>
           
