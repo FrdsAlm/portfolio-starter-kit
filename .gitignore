@@ -26,8 +26,34 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files
+# env files - CRITICAL: Never commit secrets!
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Security sensitive files
+*.key
+*.pem
+*.p12
+*.pfx
+auth-config.json
+secrets.json
+SECURITY.md
+
+# Admin credentials and hashes
+admin-password.txt
+password-hash.txt
+
+# API keys and tokens
+api-keys.json
+tokens.json
+
+# Backup files that might contain sensitive data
+*.backup
+*.bak
+*~
 
 # vercel
 .vercel
