@@ -31,11 +31,17 @@ export async function POST(request: NextRequest) {
     
     // Try hashed password first, then fallback to plain text
     const passwordHash = getAdminPasswordHash();
+    const plainPassword = getAdminPassword();
+    
+    console.log('Debug - Hash exists:', !!passwordHash);
+    console.log('Debug - Plain exists:', !!plainPassword);
+    
     if (passwordHash) {
       isValidPassword = await verifyPassword(password, passwordHash);
-    } else {
-      const plainPassword = getAdminPassword();
+      console.log('Debug - Hash verification result:', isValidPassword);
+    } else if (plainPassword) {
       isValidPassword = plainPassword === password;
+      console.log('Debug - Plain text verification result:', isValidPassword);
     }
     
     if (isValidPassword) {
