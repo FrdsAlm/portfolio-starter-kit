@@ -45,8 +45,15 @@ export async function GET() {
     );
     
     // Filter out null entries and sort by date
-    const validPosts = posts.filter(post => post !== null);
-    validPosts.sort((a, b) => new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime());
+    const validPosts = posts.filter((post): post is NonNullable<typeof post> => {
+      return post !== null && post.metadata.publishedAt;
+    });
+    
+    validPosts.sort((a, b) => {
+      const dateA = new Date(a.metadata.publishedAt).getTime();
+      const dateB = new Date(b.metadata.publishedAt).getTime();
+      return dateB - dateA;
+    });
     
     return NextResponse.json({ posts: validPosts });
   } catch (error) {
