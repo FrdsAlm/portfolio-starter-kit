@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { useAuth } from '../../lib/useAuth'
 
 const navItems = {
   '/': {
@@ -17,6 +18,7 @@ const navItems = {
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const { isAdmin } = useAuth()
 
   return (
     <nav className="mb-16">
@@ -40,10 +42,13 @@ export function Navbar() {
           {Object.entries(navItems).map(([path, { name }], index) => {
             const isExternal = path.startsWith('http')
             
+            // Redirect admin to blog management instead of public blog
+            const actualPath = (path === '/blog' && isAdmin) ? '/admin/blog' : path
+            
             return (
               <Link
                 key={path}
-                href={path}
+                href={actualPath}
                 target={isExternal ? '_blank' : undefined}
                 rel={isExternal ? 'noopener noreferrer' : undefined}
                 onClick={() => setIsOpen(false)}

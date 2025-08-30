@@ -1,11 +1,59 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile } from 'fs/promises';
+import { writeFile, readdir, readFile } from 'fs/promises';
 import { join } from 'path';
 import { checkAdminAccess } from '../../../lib/auth';
 import { validateBlogPost } from '../../../lib/validation';
 import { writeFileSync } from 'fs';
 
 const POSTS_DIR = join(process.cwd(), 'app', 'blog', 'posts');
+
+// Get all blog posts
+export async function GET() {
+  try {
+    const files = await readdir(POSTS_DIR);
+    const mdxFiles = files.filter(file => file.endsWith('.mdx'));
+    
+    const posts = await Promise.all(
+      mdxFiles.map(async (file) => {
+        const filePath = join(POSTS_DIR, file);
+        const content = await readFile(filePath, 'utf8');
+        
+        // Parse frontmatter manually
+        const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+        if (!frontmatterMatch) {
+          return null;
+        }
+        
+        const frontmatterText = frontmatterMatch[1];
+        const metadata: any = {};
+        
+        // Parse YAML-like frontmatter
+        frontmatterText.split('\n').forEach(line => {
+          const match = line.match(/^(\w+):\s*['"]?(.*?)['"]?$/);
+          if (match) {
+            metadata[match[1]] = match[2];
+          }
+        });
+        
+        const slug = file.replace('.mdx', '');
+        
+        return {
+          slug,
+          metadata
+        };
+      })
+    );
+    
+    // Filter out null entries and sort by date
+    const validPosts = posts.filter(post => post !== null);
+    validPosts.sort((a, b) => new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime());
+    
+    return NextResponse.json({ posts: validPosts });
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    return NextResponse.json({ posts: [] });
+  }
+}
 
 // Create new blog post
 export async function POST(request: NextRequest) {
