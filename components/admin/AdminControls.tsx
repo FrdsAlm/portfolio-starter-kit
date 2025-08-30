@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { AdminButton } from './AdminButton';
 import { BlogEditor } from './BlogEditor';
+import { useAuth } from '../../lib/useAuth';
 
 interface AdminControlsProps {
   slug?: string; // If provided, show edit/delete for specific post
@@ -12,6 +13,7 @@ interface AdminControlsProps {
 export function AdminControls({ slug, onRefresh }: AdminControlsProps) {
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [editingSlug, setEditingSlug] = useState<string | undefined>();
+  const { isAdmin, isLoading } = useAuth();
 
   const handleNewPost = () => {
     setEditingSlug(undefined);
@@ -53,6 +55,11 @@ export function AdminControls({ slug, onRefresh }: AdminControlsProps) {
     // Refresh the page to show updated content
     window.location.reload();
   };
+
+  // Don't render anything while loading or if not admin
+  if (isLoading || !isAdmin) {
+    return null;
+  }
 
   return (
     <>
