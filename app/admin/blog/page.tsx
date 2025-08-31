@@ -25,10 +25,15 @@ export default function AdminBlogPage() {
 
   const fetchPosts = async () => {
     try {
+      console.log('Fetching posts...');
       const response = await fetch('/api/blog');
+      console.log('Response status:', response.status);
       if (response.ok) {
         const data = await response.json();
+        console.log('Received data:', data);
         setPosts(data.posts || []);
+      } else {
+        console.error('Response not ok:', response.status, response.statusText);
       }
     } catch (error) {
       console.error('Failed to fetch posts:', error);

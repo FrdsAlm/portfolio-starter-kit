@@ -11,27 +11,44 @@ const POSTS_DIR = join(process.cwd(), 'app', 'blog', 'posts');
 export async function GET() {
   try {
     const files = await readdir(POSTS_DIR);
+    console.log('All files in posts directory:', files);
+    
     const mdxFiles = files.filter(file => file.endsWith('.mdx'));
+    console.log('MDX files found:', mdxFiles);
     
     const posts = await Promise.all(
       mdxFiles.map(async (file) => {
         const filePath = join(POSTS_DIR, file);
         const content = await readFile(filePath, 'utf8');
         
-        // Parse frontmatter manually
-        const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+        // Parse frontmatter manually - more flexible regex
+        const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n\s*---/);
         if (!frontmatterMatch) {
+          console.log('No frontmatter found in:', file);
           return null;
         }
         
         const frontmatterText = frontmatterMatch[1];
+        console.log('Frontmatter text for', file, ':', frontmatterText);
+        
         const metadata: any = {};
         
         // Parse YAML-like frontmatter
         frontmatterText.split('\n').forEach(line => {
-          const match = line.match(/^(\w+):\s*['"]?(.*?)['"]?$/);
-          if (match) {
-            metadata[match[1]] = match[2];
+          const trimmedLine = line.trim();
+          if (trimmedLine) {
+            // Handle both quoted and unquoted values
+            const match = trimmedLine.match(/^(\w+):\s*(.+)$/);
+            if (match) {
+              let value = match[2].trim();
+              // Remove quotes if present
+              if ((value.startsWith("'") && value.endsWith("'")) || 
+                  (value.startsWith('"') && value.endsWith('"'))) {
+                value = value.slice(1, -1);
+              }
+              metadata[match[1]] = value;
+              console.log('Parsed metadata for', file, ':', match[1], '=', value);
+            }
           }
         });
         
@@ -44,10 +61,18 @@ export async function GET() {
       })
     );
     
+    console.log('All posts before filtering:', posts);
+    
     // Filter out null entries and sort by date
     const validPosts = posts.filter((post): post is NonNullable<typeof post> => {
-      return post !== null && post.metadata.publishedAt;
+      const isValid = post !== null && post.metadata.publishedAt;
+      if (!isValid) {
+        console.log('Filtering out post:', post);
+      }
+      return isValid;
     });
+    
+    console.log('Valid posts after filtering:', validPosts);
     
     validPosts.sort((a, b) => {
       const dateA = new Date(a.metadata.publishedAt).getTime();
@@ -64,6 +89,7 @@ export async function GET() {
 
 // Create new blog post
 export async function POST(request: NextRequest) {
+  // Only check admin access for POST requests (creating/editing posts)
   if (!checkAdminAccess()) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
