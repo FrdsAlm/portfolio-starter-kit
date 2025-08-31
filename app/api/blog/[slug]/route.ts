@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { writeFile, unlink, readFile } from 'fs/promises';
 import { join } from 'path';
-import { checkAdminAccess } from '../../../../lib/auth';
+import { checkAdminAccessFromRequest } from '../../../../lib/auth';
 import { validateBlogPost } from '../../../../lib/validation';
 import { readFileSync, writeFileSync, unlinkSync, existsSync } from 'fs';
 
@@ -12,7 +12,7 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { slug: string } }
 ) {
-  if (!checkAdminAccess()) {
+  if (!checkAdminAccessFromRequest(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -56,7 +56,7 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: { slug: string } }
 ) {
-  if (!checkAdminAccess()) {
+  if (!checkAdminAccessFromRequest(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -83,7 +83,11 @@ ${content}`;
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to update post' }, { status: 500 });
+    console.error('Error updating blog post:', error);
+    return NextResponse.json({ 
+      error: 'Failed to update post',
+      details: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+    }, { status: 500 });
   }
 }
 
@@ -92,7 +96,7 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { slug: string } }
 ) {
-  if (!checkAdminAccess()) {
+  if (!checkAdminAccessFromRequest(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -106,6 +110,10 @@ export async function DELETE(
       return NextResponse.json({ error: 'Post not found' }, { status: 404 });
     }
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to delete post' }, { status: 500 });
+    console.error('Error deleting blog post:', error);
+    return NextResponse.json({ 
+      error: 'Failed to delete post',
+      details: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+    }, { status: 500 });
   }
 }

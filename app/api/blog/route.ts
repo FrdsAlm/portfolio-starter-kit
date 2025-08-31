@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { writeFile, readdir, readFile } from 'fs/promises';
 import { join } from 'path';
-import { checkAdminAccess } from '../../../lib/auth';
+import { checkAdminAccessFromRequest } from '../../../lib/auth';
 import { validateBlogPost } from '../../../lib/validation';
 import { writeFileSync } from 'fs';
 
@@ -11,10 +11,7 @@ const POSTS_DIR = join(process.cwd(), 'app', 'blog', 'posts');
 export async function GET() {
   try {
     const files = await readdir(POSTS_DIR);
-    console.log('All files in posts directory:', files);
-    
     const mdxFiles = files.filter(file => file.endsWith('.mdx'));
-    console.log('MDX files found:', mdxFiles);
     
     const posts = await Promise.all(
       mdxFiles.map(async (file) => {
@@ -29,8 +26,6 @@ export async function GET() {
         }
         
         const frontmatterText = frontmatterMatch[1];
-        console.log('Frontmatter text for', file, ':', frontmatterText);
-        
         const metadata: any = {};
         
         // Parse YAML-like frontmatter
@@ -47,7 +42,6 @@ export async function GET() {
                 value = value.slice(1, -1);
               }
               metadata[match[1]] = value;
-              console.log('Parsed metadata for', file, ':', match[1], '=', value);
             }
           }
         });
@@ -61,18 +55,10 @@ export async function GET() {
       })
     );
     
-    console.log('All posts before filtering:', posts);
-    
     // Filter out null entries and sort by date
     const validPosts = posts.filter((post): post is NonNullable<typeof post> => {
-      const isValid = post !== null && post.metadata.publishedAt;
-      if (!isValid) {
-        console.log('Filtering out post:', post);
-      }
-      return isValid;
+      return post !== null && post.metadata.publishedAt;
     });
-    
-    console.log('Valid posts after filtering:', validPosts);
     
     validPosts.sort((a, b) => {
       const dateA = new Date(a.metadata.publishedAt).getTime();
@@ -90,7 +76,7 @@ export async function GET() {
 // Create new blog post
 export async function POST(request: NextRequest) {
   // Only check admin access for POST requests (creating/editing posts)
-  if (!checkAdminAccess()) {
+  if (!checkAdminAccessFromRequest(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -125,6 +111,10 @@ ${content}`;
 
     return NextResponse.json({ success: true, slug });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to create post' }, { status: 500 });
+    console.error('Error creating blog post:', error);
+    return NextResponse.json({ 
+      error: 'Failed to create post',
+      details: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+    }, { status: 500 });
   }
 }
