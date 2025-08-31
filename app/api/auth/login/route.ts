@@ -5,6 +5,9 @@ import { createAdminToken } from '../../../../lib/jwt';
 import { checkRateLimit, recordFailedAttempt, clearAttempts } from '../../../../lib/rateLimit';
 import { validatePassword, getClientIP } from '../../../../lib/validation';
 
+// Force dynamic rendering to prevent static optimization issues
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: NextRequest) {
   try {
     const clientIP = getClientIP(request);

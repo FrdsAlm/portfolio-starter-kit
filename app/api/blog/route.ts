@@ -5,6 +5,9 @@ import { checkAdminAccessFromRequest } from '../../../lib/auth';
 import { validateBlogPost } from '../../../lib/validation';
 import { writeFileSync } from 'fs';
 
+// Force dynamic rendering to prevent static optimization issues
+export const dynamic = 'force-dynamic';
+
 const POSTS_DIR = join(process.cwd(), 'app', 'blog', 'posts');
 
 // Get all blog posts
