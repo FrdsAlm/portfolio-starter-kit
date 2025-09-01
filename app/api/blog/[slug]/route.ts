@@ -1,14 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile, unlink, readFile } from 'fs/promises';
-import { join } from 'path';
 import { checkAdminAccessFromRequest } from '../../../../lib/auth';
 import { validateBlogPost } from '../../../../lib/validation';
-import { readFileSync, writeFileSync, unlinkSync, existsSync } from 'fs';
+import { BlogService } from '../../../../lib/blogService';
 
 // Force dynamic rendering to prevent static optimization issues
 export const dynamic = 'force-dynamic';
-
-const POSTS_DIR = join(process.cwd(), 'app', 'blog', 'posts');
 
 // Get blog post for editing
 export async function GET(
@@ -20,34 +16,18 @@ export async function GET(
   }
 
   try {
-    const filePath = join(POSTS_DIR, `${params.slug}.mdx`);
+    const post = await BlogService.getPostBySlug(params.slug);
     
-    if (!existsSync(filePath)) {
+    if (!post) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 });
     }
 
-    const content = readFileSync(filePath, 'utf-8');
-    
-    // Parse frontmatter
-    const frontmatterRegex = /---\s*([\s\S]*?)\s*---/;
-    const match = frontmatterRegex.exec(content);
-    const frontMatterBlock = match![1];
-    const postContent = content.replace(frontmatterRegex, '').trim();
-    
-    const metadata: any = {};
-    frontMatterBlock.trim().split('\n').forEach((line) => {
-      const [key, ...valueArr] = line.split(': ');
-      let value = valueArr.join(': ').trim();
-      value = value.replace(/^['"](.*)['"]$/, '$1');
-      metadata[key.trim()] = value;
-    });
-
     return NextResponse.json({
-      slug: params.slug,
-      title: metadata.title,
-      summary: metadata.summary,
-      publishedAt: metadata.publishedAt,
-      content: postContent
+      slug: post.slug,
+      title: post.title,
+      summary: post.summary,
+      publishedAt: post.publishedAt,
+      content: post.content
     });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to load post' }, { status: 500 });
@@ -73,16 +53,17 @@ export async function PUT(
       return NextResponse.json({ error: validation.error }, { status: 400 });
     }
     
-    const frontmatter = `---
-title: '${title}'
-publishedAt: '${publishedAt}'
-summary: '${summary}'
----
+    // Update post using KV service
+    const updatedPost = await BlogService.updatePost(params.slug, {
+      title,
+      summary,
+      content,
+      publishedAt
+    });
 
-${content}`;
-
-    const filePath = join(POSTS_DIR, `${params.slug}.mdx`);
-    writeFileSync(filePath, frontmatter);
+    if (!updatedPost) {
+      return NextResponse.json({ error: 'Post not found' }, { status: 404 });
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {
@@ -104,14 +85,14 @@ export async function DELETE(
   }
 
   try {
-    const filePath = join(POSTS_DIR, `${params.slug}.mdx`);
+    // Delete post using KV service
+    const success = await BlogService.deletePost(params.slug);
     
-    if (existsSync(filePath)) {
-      unlinkSync(filePath);
-      return NextResponse.json({ success: true });
-    } else {
+    if (!success) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 });
     }
+
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Error deleting blog post:', error);
     return NextResponse.json({ 
