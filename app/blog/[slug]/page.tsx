@@ -1,18 +1,17 @@
 import { notFound } from 'next/navigation'
-import { CustomMDX } from 'app/components/mdx'
-import { formatDate } from 'app/blog/utils'
+import { formatDate } from 'app/blog/date'
 import { baseUrl } from 'app/sitemap'
-import { AdminControls } from '../../../components/admin/AdminControls'
-import { BlogService } from '../../../lib/blogService'
+import { client } from '@/sanity/lib/client'
+import { postQuery } from '@/sanity/lib/queries'
+import PortableText from 'app/components/PortableText'
+import SanityImage from 'app/components/SanityImage'
 
 export const dynamic = 'force-dynamic'
 
-// Do not pre-generate params; fetch dynamically from KV
-
 export async function generateMetadata({ params }) {
-  const post = await BlogService.getPostBySlug(params.slug)
+  const post = await client.fetch(postQuery, { slug: params.slug })
   if (!post) return {}
-  const { title, summary: description, publishedAt: publishedTime } = post
+  const { title, description, publishedAt: publishedTime } = post
   const ogImage = `${baseUrl}/og?title=${encodeURIComponent(title)}`
   return {
     title,
@@ -35,7 +34,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Blog({ params }) {
-  const post = await BlogService.getPostBySlug(params.slug)
+  const post = await client.fetch(postQuery, { slug: params.slug })
   if (!post) notFound()
 
   return (
@@ -50,10 +49,10 @@ export default async function Blog({ params }) {
             headline: post.title,
             datePublished: post.publishedAt,
             dateModified: post.publishedAt,
-            description: post.summary,
+            description: post.description,
             image: `/og?title=${encodeURIComponent(post.title)}`,
             url: `${baseUrl}/blog/${post.slug}`,
-            author: { '@type': 'Person', name: 'My Portfolio' },
+            author: { '@type': 'Person', name: post.author?.name || 'My Portfolio' },
           }),
         }}
       />
@@ -65,9 +64,32 @@ export default async function Blog({ params }) {
           {formatDate(post.publishedAt)}
         </p>
       </div>
-      <AdminControls slug={post.slug} />
-      <article className="prose">
-        <CustomMDX source={post.content} />
+      {post.categories && post.categories.length > 0 && (
+        <div className="flex gap-2 flex-wrap mb-8">
+          {post.categories.map(cat => (
+            <span key={cat} className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-2 py-0.5 rounded">
+              #{cat}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {post.mainImage && (
+        <div className={`mb-8 ${post.mainImage.style === 'half' ? 'max-w-2xl' :
+            post.mainImage.style === 'small' ? 'max-w-md' :
+              'w-full'
+          }`}>
+          <SanityImage
+            asset={post.mainImage}
+            alt={post.title}
+            className="w-full h-auto rounded-lg"
+            priority
+          />
+        </div>
+      )}
+
+      <article className="prose prose-neutral dark:prose-invert">
+        <PortableText value={post.body} />
       </article>
     </section>
   )

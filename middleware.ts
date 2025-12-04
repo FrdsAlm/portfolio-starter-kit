@@ -13,7 +13,7 @@ export function middleware(request: NextRequest) {
   response.headers.set('X-Content-Type-Options', 'nosniff');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   response.headers.set('X-XSS-Protection', '1; mode=block');
-  
+
   // Content Security Policy
   const csp = [
     "default-src 'self'",
@@ -21,12 +21,12 @@ export function middleware(request: NextRequest) {
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: https:",
     "font-src 'self'",
-    "connect-src 'self' https://vitals.vercel-insights.com",
+    "connect-src 'self' https://vitals.vercel-insights.com https://*.api.sanity.io https://*.sanity.io",
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "form-action 'self'"
   ].join('; ');
-  
+
   response.headers.set('Content-Security-Policy', csp);
 
   // Strict Transport Security (HSTS) for HTTPS
