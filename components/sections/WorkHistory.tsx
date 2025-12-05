@@ -1,5 +1,11 @@
-export function WorkHistory() {
-  const workExperience = [
+function formatDate(dateString: string) {
+  if (!dateString) return "";
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric' }).format(date);
+}
+
+export function WorkHistory({ jobs }: { jobs: any[] }) {
+  const fallbackExperience = [
     {
       title: "Senior Software Engineer",
       company: "Volkswagen Group Technology Solutions India",
@@ -50,34 +56,53 @@ export function WorkHistory() {
     }
   ];
 
+  const workExperience = (jobs && jobs.length > 0) ? jobs.map((job: any) => ({
+    title: job.position,
+    company: job.company,
+    period: `${formatDate(job.startDate)} - ${job.isCurrent ? 'Present' : formatDate(job.endDate)}`,
+    location: "", // Location is not in schema yet, can add later or omit
+    description: job.description,
+    technologies: job.technologies || []
+  })) : fallbackExperience;
+
   return (
     <section className="mb-12">
       <h2 className="text-2xl font-bold mb-6">Work Experience</h2>
-      <div className="space-y-6">
-        {workExperience.map((job, index) => (
-          <div key={index} className="border-l-4 border-blue-500 pl-6 pb-6">
-            <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
-              <h3 className="text-xl font-semibold">{job.title}</h3>
-              <span className="text-sm text-gray-600 dark:text-gray-400 md:ml-4">
+      <div className="relative border-l border-gray-200 dark:border-gray-800 ml-3 space-y-12">
+        {workExperience.map((job: any, index: number) => (
+          <div key={index} className="relative pl-8 group">
+            {/* Timeline Dot */}
+            <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 group-hover:bg-blue-500 transition-colors duration-300 ring-4 ring-white dark:ring-black" />
+
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-2">
+              <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                {job.title}
+              </h3>
+              <span className="text-sm font-mono text-gray-500 dark:text-gray-500 whitespace-nowrap mt-1 sm:mt-0">
                 {job.period}
               </span>
             </div>
-            <p className="text-lg text-blue-600 dark:text-blue-400 mb-1">
-              {job.company}
-            </p>
-            {job.location && (
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
-                {job.location}
+
+            <div className="mb-4">
+              <p className="text-medium font-medium text-neutral-800 dark:text-neutral-200">
+                {job.company}
               </p>
-            )}
-            <p className="text-gray-700 dark:text-gray-300 mb-3 leading-relaxed">
+              {job.location && (
+                <p className="text-sm text-gray-500 dark:text-gray-500">
+                  {job.location}
+                </p>
+              )}
+            </div>
+
+            <p className="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed max-w-2xl">
               {job.description}
             </p>
+
             <div className="flex flex-wrap gap-2">
-              {job.technologies.map((tech) => (
+              {job.technologies.map((tech: string) => (
                 <span
                   key={tech}
-                  className="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-sm rounded-full"
+                  className="px-2.5 py-0.5 text-xs font-medium bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-400 rounded-md border border-gray-200 dark:border-gray-800"
                 >
                   {tech}
                 </span>

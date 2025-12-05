@@ -1,52 +1,74 @@
 import Image from 'next/image';
+import SanityImage from '@/app/components/SanityImage';
 
-export function ProfileHeader() {
+export function ProfileHeader({ profile }: { profile: any }) {
+  // Fallback data
+  const data = {
+    name: profile?.name || "Firdous Alam",
+    headline: profile?.headline || "SAP Integration Specialist & Middleware Expert",
+    shortBio: profile?.shortBio || "Results-driven specialist with 3+ years of experience designing seamless data integration solutions. Expert in SAP Integration Suite, middleware technologies, and enterprise architecture.",
+    email: profile?.email || "email@firdous.dev",
+    linkedin: profile?.linkedin || "https://www.linkedin.com/in/firdous-alam/",
+    profileImage: profile?.profileImage,
+  };
+
   return (
-    <section className="mb-12">
+    <section className="mb-16 animate-in fade-in slide-in-from-bottom-4 duration-1000 ease-out">
       <div className="flex flex-col items-center text-center mb-8">
-        <div className="relative w-42 h-42 mb-6">
-          <Image
-            src="/profile.jpg"
-            alt="Firdous Alam"
-            width={168}
-            height={168}
-            className="rounded-full object-cover"
-            priority
-          />
+        <div className="relative w-48 h-48 mb-8 group">
+          <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+          <div className="relative w-48 h-48">
+            {data.profileImage ? (
+              <SanityImage
+                asset={data.profileImage}
+                alt={data.name}
+                fill
+                className="rounded-full object-cover border-4 border-white dark:border-black shadow-2xl"
+                priority
+              />
+            ) : (
+              <Image
+                src="/profile.jpg"
+                alt={data.name}
+                fill
+                className="rounded-full object-cover border-4 border-white dark:border-black shadow-2xl"
+                priority
+              />
+            )}
+          </div>
         </div>
-        <h1 className="text-4xl font-bold tracking-tight mb-2">
-          Firdous Alam
+        <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-neutral-900 to-neutral-500 dark:from-white dark:to-neutral-500">
+          {data.name}
         </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-400 mb-4">
-          SAP Integration Specialist & Middleware Expert
+        <p className="text-2xl font-medium text-neutral-800 dark:text-neutral-200 mb-6">
+          {data.headline}
         </p>
-        <p className="max-w-3xl text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
-          Results-driven SAP integration specialist with 3+ years of experience designing and implementing seamless data integration solutions. Leveraging SAP Integration Suite, I specialize in creating scalable integration flows to ensure efficient data exchange across business-critical systems. Expert in middleware technologies, marketing automation, and enterprise procurement solutions.
+        <p className="max-w-2xl text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed mb-10">
+          {data.shortBio}
         </p>
-        
+
         {/* Contact Links */}
-        <div className="flex flex-col sm:flex-row gap-6 justify-center text-neutral-600 dark:text-neutral-300">
+        <div className="flex flex-wrap gap-4 justify-center items-center">
           <a
-            href="mailto:email@firdous.dev"
-            className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+            href={`mailto:${data.email}`}
+            className="flex items-center justify-center w-[144px] h-[40px] text-sm rounded-full bg-neutral-900 dark:bg-white text-white dark:text-black font-medium border border-transparent hover:scale-105 transition-all duration-200"
           >
-            <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-              <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
-            <span className="h-7 flex items-center">contact</span>
+            Contact Me
           </a>
-          
+
           <a
-            href="https://www.linkedin.com/in/firdous-alam/"
+            href={data.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+            className="flex items-center justify-center w-40 h-11 text-sm rounded-full border border-neutral-200 dark:border-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-900 font-medium hover:scale-105 transition-all duration-200"
           >
             <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
             </svg>
-            <span className="h-7 flex items-center">linkedin</span>
+            LinkedIn
           </a>
         </div>
       </div>

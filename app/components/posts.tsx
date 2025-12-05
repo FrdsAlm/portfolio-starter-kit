@@ -1,10 +1,7 @@
 import Link from 'next/link'
 import { formatDate } from 'app/blog/date'
-import { client } from '@/sanity/lib/client'
-import { postsQuery } from '@/sanity/lib/queries'
-
-export async function BlogPosts() {
-  const allBlogs = await client.fetch(postsQuery)
+export function BlogPosts({ posts }: { posts: any[] }) {
+  const allBlogs = posts || [];
 
   return (
     <div>
