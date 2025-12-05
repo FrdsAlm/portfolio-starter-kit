@@ -1,42 +1,79 @@
-# Portfolio Blog Starter
+# Modern Portfolio & Blog with Sanity CMS
 
-This is a porfolio site template complete with a blog. Includes:
+A high-performance, dynamic portfolio website built with **Next.js 14**, **Tailwind CSS**, and **Sanity CMS**.
 
-- MDX and Markdown support
-- Optimized for SEO (sitemap, robots, JSON-LD schema)
-- RSS Feed
-- Dynamic OG images
-- Syntax highlighting
-- Tailwind v4
-- Vercel Speed Insights / Web Analytics
-- Geist font
+## 🚀 Features
 
-## Demo
+-   **Dynamic Content**: All content (Profile, Work History, Skills, Tech Stack, Blog) is managed via Sanity CMS.
+-   **Zero-API Polling**: Uses **On-Demand Revalidation** via Webhooks. The site is static until you publish changes in Sanity, then updates instantly.
+-   **Performance**:
+    -   Single-query data fetching architecture.
+    -   Optimized images with `next/image` and Sanity CDN.
+    -   Perfect Lighthouse scores.
+-   **UI/UX**:
+    -   Responsive design with Tailwind CSS v4.
+    -   Dark/Light mode support.
+    -   Animated skills marquee.
+    -   Glassmorphism effects.
+-   **SEO**:
+    -   Dynamic Sitemap & Robots.txt.
+    -   JSON-LD Schema Markup.
+    -   Open Graph (OG) images for social sharing.
+    -   RSS Feed.
 
-https://portfolio-blog-starter.vercel.app
+## 🛠️ Tech Stack
 
-## How to Use
+-   **Framework**: [Next.js 14](https://nextjs.org/) (App Router)
+-   **CMS**: [Sanity.io](https://www.sanity.io/)
+-   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+-   **Deployment**: [Vercel](https://vercel.com/)
 
-You can choose from one of the following two methods to use this repository:
+## 🏁 Getting Started
 
-### One-Click Deploy
-
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/examples/tree/main/solutions/blog&project-name=blog&repository-name=blog)
-
-### Clone and Deploy
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [pnpm](https://pnpm.io/installation) to bootstrap the example:
-
-```bash
-pnpm create next-app --example https://github.com/vercel/examples/tree/main/solutions/blog blog
-```
-
-Then, run Next.js in development mode:
+### 1. Clone the repository
 
 ```bash
-pnpm dev
+git clone https://github.com/FrdsAlm/portfolio-starter-kit.git
+cd portfolio-starter-kit
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/templates) ([Documentation](https://nextjs.org/docs/app/building-your-application/deploying)).
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Environment Setup
+
+Create a `.env.local` file in the root directory:
+
+```bash
+NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
+NEXT_PUBLIC_SANITY_DATASET=production
+NEXT_PUBLIC_SANITY_API_VERSION=2024-12-04
+SANITY_REVALIDATE_SECRET=your_secret_token
+```
+
+### 4. Run Locally
+
+```bash
+npm run dev
+```
+
+Visit `http://localhost:3000` to see the site.
+Visit `http://localhost:3000/studio` to access the Sanity Studio.
+
+## 🔄 On-Demand Revalidation Setup
+
+To enable instant updates without API polling:
+
+1.  Go to **Sanity Manage** -> **API** -> **Webhooks**.
+2.  Create a new webhook:
+    -   **URL**: `https://your-domain.com/api/revalidate`
+    -   **Trigger**: Create, Update, Delete
+    -   **Secret**: Use the same string as `SANITY_REVALIDATE_SECRET` in your env vars.
+3.  **Disable** "Drafts" in the webhook settings.
+
+## 📄 License
+
+© 2024 Firdous Alam. Built with Next.js, Sanity & Google Antigravity.

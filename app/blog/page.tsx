@@ -7,10 +7,8 @@ export const metadata = {
   description: 'Read my blog.',
 }
 
-export const revalidate = 60 // Revalidate every 60 seconds
-
 export default async function Page() {
-  const posts = await client.fetch(postsQuery)
+  const posts = await client.fetch(postsQuery, {}, { next: { tags: ['portfolio'] } })
 
   return (
     <section>

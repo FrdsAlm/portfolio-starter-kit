@@ -6,10 +6,8 @@ import { postQuery } from '@/sanity/lib/queries'
 import PortableText from 'app/components/PortableText'
 import SanityImage from 'app/components/SanityImage'
 
-export const dynamic = 'force-dynamic'
-
 export async function generateMetadata({ params }) {
-  const post = await client.fetch(postQuery, { slug: params.slug })
+  const post = await client.fetch(postQuery, { slug: params.slug }, { next: { tags: ['portfolio'] } })
   if (!post) return {}
   const { title, description, publishedAt: publishedTime } = post
   const ogImage = `${baseUrl}/og?title=${encodeURIComponent(title)}`
@@ -34,7 +32,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Blog({ params }) {
-  const post = await client.fetch(postQuery, { slug: params.slug })
+  const post = await client.fetch(postQuery, { slug: params.slug }, { next: { tags: ['portfolio'] } })
   if (!post) notFound()
 
   return (
@@ -76,8 +74,8 @@ export default async function Blog({ params }) {
 
       {post.mainImage && (
         <div className={`mb-8 ${post.mainImage.style === 'half' ? 'max-w-2xl' :
-            post.mainImage.style === 'small' ? 'max-w-md' :
-              'w-full'
+          post.mainImage.style === 'small' ? 'max-w-md' :
+            'w-full'
           }`}>
           <SanityImage
             asset={post.mainImage}
