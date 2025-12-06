@@ -72,10 +72,10 @@ export function WorkHistory({ jobs }: { jobs: any[] }) {
         {workExperience.map((job: any, index: number) => (
           <div key={index} className="relative pl-8 group">
             {/* Timeline Dot */}
-            <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 group-hover:bg-blue-500 transition-colors duration-300 ring-4 ring-white dark:ring-black" />
+            <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 group-hover:bg-[var(--color-electric-green)] transition-colors duration-300 ring-4 ring-white dark:ring-black" />
 
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-2">
-              <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 group-hover:text-[var(--color-teal-blue)] dark:group-hover:text-[var(--color-electric-green)] transition-colors">
                 {job.title}
               </h3>
               <span className="text-sm font-mono text-gray-500 dark:text-gray-500 whitespace-nowrap mt-1 sm:mt-0">

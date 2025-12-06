@@ -1,11 +1,15 @@
 @import 'tailwindcss';
 
 ::selection {
-  background-color: #47a3f3;
-  color: #fefefe;
+  background-color: #39ff14;
+  color: #000000;
 }
 
 :root {
+  --color-electric-green: #39ff14;
+  --color-lite-green: #86efac;
+  --color-teal-blue: #2dd4bf;
+
   --sh-class: #2d5e9d;
   --sh-identifier: #354150;
   --sh-sign: #8996a3;
@@ -24,9 +28,16 @@
     --sh-keyword: #f47067;
     --sh-string: #0fa295;
   }
+
   html {
     color-scheme: dark;
   }
+}
+
+@theme {
+  --color-electric-green: var(--color-electric-green);
+  --color-lite-green: var(--color-lite-green);
+  --color-teal-blue: var(--color-teal-blue);
 }
 
 html {
@@ -56,7 +67,7 @@ html {
   content: '#';
 }
 
-.prose *:hover > .anchor {
+.prose *:hover>.anchor {
   @apply visible;
 }
 
@@ -115,7 +126,7 @@ html {
   @apply list-decimal pl-6;
 }
 
-.prose > :first-child {
+.prose> :first-child {
   /* Override removing top margin, causing layout shift */
   margin-top: 1.25em !important;
   margin-bottom: 1.25em !important;
@@ -126,8 +137,10 @@ pre::-webkit-scrollbar {
 }
 
 pre {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 /* Remove Safari input shadow on mobile */
@@ -153,6 +166,7 @@ table {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -166,7 +180,32 @@ table {
   animation: marquee 30s linear infinite reverse;
 }
 
+
 .pause-on-hover:hover .animate-marquee,
 .pause-on-hover:hover .animate-marquee-reverse {
   animation-play-state: paused;
+}
+
+
+@keyframes gradient-xy {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-text {
+  background-size: 200% auto;
+  transition: background-size 0.3s ease;
+}
+
+.animate-gradient-text:hover {
+  animation: gradient-xy 3s linear infinite;
 }

@@ -48,7 +48,7 @@ export function Navbar() {
                 rel={isExternal ? 'noopener noreferrer' : undefined}
                 onClick={() => setIsOpen(false)}
                 className={`
-                  text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400
+                  text-gray-700 dark:text-gray-300 hover:text-[var(--color-teal-blue)] dark:hover:text-[var(--color-electric-green)]
                   font-medium transition-all duration-300 ease-out whitespace-nowrap
                   hover:scale-105 transform
                   ${isOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}

@@ -53,7 +53,7 @@ export function BlogList({ posts }: BlogListProps) {
                     >
                         <div className="w-full flex flex-col">
                             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-1">
-                                <h3 className="text-lg font-medium text-neutral-900 dark:text-neutral-100 tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                <h3 className="text-lg font-medium text-neutral-900 dark:text-neutral-100 tracking-tight group-hover:text-[var(--color-teal-blue)] dark:group-hover:text-[var(--color-electric-green)] transition-colors">
                                     {post.title}
                                 </h3>
                                 <p className="text-neutral-600 dark:text-neutral-400 text-sm tabular-nums">
