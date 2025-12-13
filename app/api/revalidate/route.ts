@@ -17,8 +17,8 @@ export async function POST(req: NextRequest) {
             return new Response('Bad Request', { status: 400 })
         }
 
-        // Revalidate the 'portfolio' tag
-        revalidateTag('portfolio')
+        // Revalidate the 'portfolio' tag with stale-while-revalidate behavior
+        revalidateTag('portfolio', 'max')
 
         return NextResponse.json({
             status: 200,

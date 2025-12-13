@@ -67,34 +67,34 @@ export function WorkHistory({ jobs }: { jobs: any[] }) {
 
   return (
     <section className="mb-12">
-      <h2 className="text-2xl font-bold mb-6">Work Experience</h2>
-      <div className="relative border-l border-gray-200 dark:border-gray-800 ml-3 space-y-12">
+      <h2 className="text-2xl font-bold mb-6 text-[var(--text-primary)]">Work Experience</h2>
+      <div className="relative border-l border-[var(--border-color)] ml-3 space-y-12">
         {workExperience.map((job: any, index: number) => (
           <div key={index} className="relative pl-8 group">
             {/* Timeline Dot */}
-            <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 group-hover:bg-[var(--color-electric-green)] transition-colors duration-300 ring-4 ring-white dark:ring-black" />
+            <div className="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 group-hover:bg-[var(--color-electric-green)] transition-colors duration-300 ring-4 ring-[var(--bg-primary)]" />
 
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-2">
-              <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 group-hover:text-[var(--color-teal-blue)] dark:group-hover:text-[var(--color-electric-green)] transition-colors">
+              <h3 className="text-xl font-semibold text-[var(--text-primary)] group-hover:text-[var(--text-highlight)] transition-colors">
                 {job.title}
               </h3>
-              <span className="text-sm font-mono text-gray-500 dark:text-gray-500 whitespace-nowrap mt-1 sm:mt-0">
+              <span className="text-sm font-mono text-[var(--text-muted)] whitespace-nowrap mt-1 sm:mt-0">
                 {job.period}
               </span>
             </div>
 
             <div className="mb-4">
-              <p className="text-medium font-medium text-neutral-800 dark:text-neutral-200">
+              <p className="text-medium font-medium text-[var(--text-secondary)]">
                 {job.company}
               </p>
               {job.location && (
-                <p className="text-sm text-gray-500 dark:text-gray-500">
+                <p className="text-sm text-[var(--text-muted)]">
                   {job.location}
                 </p>
               )}
             </div>
 
-            <p className="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed max-w-2xl">
+            <p className="text-[var(--text-muted)] mb-4 leading-relaxed max-w-2xl">
               {job.description}
             </p>
 
@@ -102,7 +102,7 @@ export function WorkHistory({ jobs }: { jobs: any[] }) {
               {job.technologies.map((tech: string) => (
                 <span
                   key={tech}
-                  className="px-2.5 py-0.5 text-xs font-medium bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-400 rounded-md border border-gray-200 dark:border-gray-800"
+                  className="px-2.5 py-0.5 text-xs font-medium bg-[var(--bg-subtle)] text-[var(--text-muted)] rounded-md border border-[var(--border-color)]"
                 >
                   {tech}
                 </span>

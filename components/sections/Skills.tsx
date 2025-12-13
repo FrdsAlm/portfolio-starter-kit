@@ -40,8 +40,8 @@ export function Skills({ skills }: { skills: any[] }) {
 
       <div className="relative flex flex-col gap-8">
         {/* Gradient Masks */}
-        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white dark:from-black to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white dark:from-black to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[var(--bg-primary)] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[var(--bg-primary)] to-transparent z-10 pointer-events-none" />
 
         {/* Row 1 */}
         <div className="flex overflow-hidden pause-on-hover">
@@ -76,9 +76,9 @@ export function Skills({ skills }: { skills: any[] }) {
 
 function SkillCard({ skill }: { skill: { name: string; icon: string } }) {
   return (
-    <div className="flex items-center gap-2 px-6 py-3 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-full shadow-sm whitespace-nowrap hover:border-[var(--color-electric-green)] transition-colors cursor-default">
+    <div className="flex items-center gap-2 px-6 py-3 bg-[var(--bg-subtle)] border border-[var(--border-color)] rounded-full shadow-sm whitespace-nowrap hover:border-[var(--color-electric-green)] transition-colors cursor-default">
       <span className="text-xl">{skill.icon}</span>
-      <span className="font-medium text-neutral-700 dark:text-neutral-200">{skill.name}</span>
+      <span className="font-medium text-[var(--text-secondary)]">{skill.name}</span>
     </div>
   );
 }

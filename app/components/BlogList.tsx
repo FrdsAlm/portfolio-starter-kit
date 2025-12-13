@@ -38,12 +38,12 @@ export function BlogList({ posts }: BlogListProps) {
                     placeholder="Search posts..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full p-3 border rounded-md dark:bg-gray-800 dark:border-gray-700"
+                    className="w-full p-3 border rounded-md bg-[var(--bg-subtle)] border-[var(--border-color)]"
                 />
             </div>
 
             {filteredPosts.length === 0 ? (
-                <p className="text-gray-500 text-center">No posts found.</p>
+                <p className="text-[var(--text-muted)] text-center">No posts found.</p>
             ) : (
                 filteredPosts.map((post) => (
                     <Link
@@ -53,16 +53,16 @@ export function BlogList({ posts }: BlogListProps) {
                     >
                         <div className="w-full flex flex-col">
                             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-1">
-                                <h3 className="text-lg font-medium text-neutral-900 dark:text-neutral-100 tracking-tight group-hover:text-[var(--color-teal-blue)] dark:group-hover:text-[var(--color-electric-green)] transition-colors">
+                                <h3 className="text-lg font-medium text-[var(--text-primary)] tracking-tight group-hover:text-[var(--text-highlight)] transition-colors">
                                     {post.title}
                                 </h3>
-                                <p className="text-neutral-600 dark:text-neutral-400 text-sm tabular-nums">
+                                <p className="text-[var(--text-muted)] text-sm tabular-nums">
                                     {formatDate(post.publishedAt, false)}
                                 </p>
                             </div>
 
                             {post.description && (
-                                <p className="text-neutral-600 dark:text-neutral-400 text-sm mb-2">
+                                <p className="text-[var(--text-muted)] text-sm mb-2">
                                     {post.description}
                                 </p>
                             )}
@@ -70,7 +70,7 @@ export function BlogList({ posts }: BlogListProps) {
                             {post.categories && post.categories.length > 0 && (
                                 <div className="flex gap-2 flex-wrap mt-1">
                                     {post.categories.map(cat => (
-                                        <span key={cat} className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-2 py-0.5 rounded">
+                                        <span key={cat} className="text-xs bg-[var(--bg-subtle)] text-[var(--text-muted)] px-2 py-0.5 rounded">
                                             #{cat}
                                         </span>
                                     ))}

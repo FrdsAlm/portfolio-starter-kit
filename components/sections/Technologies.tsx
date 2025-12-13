@@ -18,15 +18,15 @@ export function Technologies({ domains }: { domains: any[] }) {
               <div
                 key={domain._id}
                 className={`${colSpan} ${isBlue
-                  ? 'bg-gradient-to-br from-[var(--color-electric-green)]/10 to-[var(--color-teal-blue)]/10 dark:from-[var(--color-electric-green)]/10 dark:to-[var(--color-teal-blue)]/10 border-[var(--color-electric-green)]/20 dark:border-[var(--color-electric-green)]/20'
-                  : 'bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800'
+                  ? 'bg-[var(--color-accent-bg)] dark:bg-gradient-to-br dark:from-[var(--color-electric-green)]/10 dark:to-[var(--color-teal-blue)]/10 border-[var(--color-teal-blue)]/40 dark:border-[var(--color-electric-green)]/20'
+                  : 'bg-[var(--bg-subtle)] border-[var(--border-color)]'
                   } rounded-2xl p-8 border hover:border-[var(--color-electric-green)]/50 transition-colors group`}
               >
                 <div className="flex items-center gap-3 mb-6">
-                  <span className={`text-3xl p-3 rounded-xl shadow-sm ${isBlue ? 'bg-white dark:bg-[var(--color-teal-blue)]/20' : 'bg-white dark:bg-black'}`}>
+                  <span className={`text-3xl p-3 rounded-xl shadow-sm ${isBlue ? 'bg-white dark:bg-[var(--color-teal-blue)]/20' : 'bg-[var(--bg-primary)]'}`}>
                     {domain.icon}
                   </span>
-                  <h3 className={`text-xl font-bold ${isBlue ? 'text-[var(--color-teal-blue)] dark:text-[var(--color-electric-green)]' : 'text-neutral-900 dark:text-neutral-100'}`}>
+                  <h3 className={`text-xl font-bold ${isBlue ? 'text-[var(--color-teal-blue)] dark:text-[var(--color-electric-green)]' : 'text-[var(--text-primary)]'}`}>
                     {domain.title}
                   </h3>
                 </div>
@@ -36,8 +36,8 @@ export function Technologies({ domains }: { domains: any[] }) {
                     <span
                       key={item}
                       className={`px-3 py-1 rounded-lg text-sm border ${isBlue
-                        ? 'bg-white/50 dark:bg-[var(--color-teal-blue)]/10 border-[var(--color-teal-blue)]/30 dark:border-[var(--color-teal-blue)]/30 text-teal-800 dark:text-[var(--color-lite-green)]'
-                        : 'bg-white dark:bg-black border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300'
+                        ? 'bg-white dark:bg-[var(--color-teal-blue)]/10 border-[var(--color-teal-blue)]/40 dark:border-[var(--color-teal-blue)]/30 text-[var(--color-teal-blue)] dark:text-[var(--color-lite-green)]'
+                        : 'bg-[var(--bg-primary)] border-[var(--border-color)] text-[var(--text-secondary)]'
                         }`}
                     >
                       {item}
@@ -80,7 +80,7 @@ export function Technologies({ domains }: { domains: any[] }) {
                 <span className="w-2 h-2 rounded-full bg-[#00B9F2] mr-2"></span>
                 Integration Suite
               </h4>
-              <ul className="space-y-2 text-neutral-700 dark:text-neutral-300 text-sm">
+              <ul className="space-y-2 text-[var(--text-secondary)] text-sm">
                 <li>• SAP Cloud Integration (CPI)</li>
                 <li>• API Management & Security</li>
                 <li>• Open Connectors</li>
@@ -93,7 +93,7 @@ export function Technologies({ domains }: { domains: any[] }) {
                 <span className="w-2 h-2 rounded-full bg-[#00B9F2] mr-2"></span>
                 Cloud Administration
               </h4>
-              <ul className="space-y-2 text-neutral-700 dark:text-neutral-300 text-sm">
+              <ul className="space-y-2 text-[var(--text-secondary)] text-sm">
                 <li>• SAP BTP Administration</li>
                 <li>• Identity Auth (IAS/IPS)</li>
                 <li>• Cloud Connector Config</li>
@@ -106,7 +106,7 @@ export function Technologies({ domains }: { domains: any[] }) {
                 <span className="w-2 h-2 rounded-full bg-[#00B9F2] mr-2"></span>
                 Extended SAP Portfolio
               </h4>
-              <ul className="space-y-2 text-neutral-700 dark:text-neutral-300 text-sm">
+              <ul className="space-y-2 text-[var(--text-secondary)] text-sm">
                 <li>• SAP Customer Data Platform</li>
                 <li>• SAP Marketing Cloud</li>
                 <li>• SAP Build Process Automation</li>
@@ -118,7 +118,7 @@ export function Technologies({ domains }: { domains: any[] }) {
         </div>
 
         {/* Domain Expertise Columns */}
-        <div className="lg:col-span-6 bg-gradient-to-br from-[var(--color-electric-green)]/5 to-[var(--color-teal-blue)]/5 dark:from-[var(--color-electric-green)]/10 dark:to-[var(--color-teal-blue)]/10 rounded-2xl p-6 border border-[var(--color-electric-green)]/20 dark:border-[var(--color-electric-green)]/20 hover:border-[var(--color-electric-green)]/40 transition-colors">
+        <div className="lg:col-span-6 bg-[var(--color-accent-bg)] dark:bg-gradient-to-br dark:from-[var(--color-electric-green)]/10 dark:to-[var(--color-teal-blue)]/10 rounded-2xl p-6 border border-[var(--color-teal-blue)]/40 dark:border-[var(--color-electric-green)]/20 hover:border-[var(--color-electric-green)]/60 transition-colors">
           <h3 className="text-lg font-bold mb-4 flex items-center text-[var(--color-teal-blue)] dark:text-[var(--color-electric-green)]">
             <span className="mr-2">📢</span> Marketing Automation & CRM
           </h3>
@@ -133,14 +133,14 @@ export function Technologies({ domains }: { domains: any[] }) {
               "Lead Scoring Models",
               "Campaign Orchestration"
             ].map(item => (
-              <span key={item} className="px-3 py-1 bg-white/50 dark:bg-[var(--color-teal-blue)]/10 border border-[var(--color-teal-blue)]/30 dark:border-[var(--color-teal-blue)]/30 rounded-lg text-sm text-teal-800 dark:text-[var(--color-lite-green)]">
+              <span key={item} className="px-3 py-1 bg-[var(--bg-subtle)] border border-[var(--border-color)] rounded-lg text-sm text-[var(--color-teal-blue)] dark:text-[var(--color-lite-green)]">
                 {item}
               </span>
             ))}
           </div>
         </div>
 
-        <div className="lg:col-span-6 bg-gradient-to-br from-[var(--color-electric-green)]/5 to-[var(--color-teal-blue)]/5 dark:from-[var(--color-electric-green)]/10 dark:to-[var(--color-teal-blue)]/10 rounded-2xl p-6 border border-[var(--color-electric-green)]/20 dark:border-[var(--color-electric-green)]/20 hover:border-[var(--color-electric-green)]/40 transition-colors">
+        <div className="lg:col-span-6 bg-[var(--color-accent-bg)] dark:bg-gradient-to-br dark:from-[var(--color-electric-green)]/10 dark:to-[var(--color-teal-blue)]/10 rounded-2xl p-6 border border-[var(--color-teal-blue)]/40 dark:border-[var(--color-electric-green)]/20 hover:border-[var(--color-electric-green)]/60 transition-colors">
           <h3 className="text-lg font-bold mb-4 flex items-center text-[var(--color-teal-blue)] dark:text-[var(--color-electric-green)]">
             <span className="mr-2">🏢</span> Procurement & Supply Chain
           </h3>
@@ -155,7 +155,7 @@ export function Technologies({ domains }: { domains: any[] }) {
               "Invoice Processing",
               "ETL / EAI Processes"
             ].map(item => (
-              <span key={item} className="px-3 py-1 bg-white/50 dark:bg-[var(--color-teal-blue)]/10 border border-[var(--color-teal-blue)]/30 dark:border-[var(--color-teal-blue)]/30 rounded-lg text-sm text-teal-800 dark:text-[var(--color-lite-green)]">
+              <span key={item} className="px-3 py-1 bg-[var(--bg-subtle)] border border-[var(--border-color)] rounded-lg text-sm text-[var(--color-teal-blue)] dark:text-[var(--color-lite-green)]">
                 {item}
               </span>
             ))}
@@ -163,7 +163,7 @@ export function Technologies({ domains }: { domains: any[] }) {
         </div>
 
         {/* Technical Versatility - Full Width Bottom */}
-        <div className="lg:col-span-12 bg-gradient-to-br from-[var(--color-electric-green)]/5 to-[var(--color-teal-blue)]/5 dark:from-[var(--color-electric-green)]/10 dark:to-[var(--color-teal-blue)]/10 rounded-2xl p-6 border border-[var(--color-electric-green)]/20 dark:border-[var(--color-electric-green)]/20 hover:border-[var(--color-electric-green)]/40 transition-colors">
+        <div className="lg:col-span-12 bg-[var(--color-accent-bg)] dark:bg-gradient-to-br dark:from-[var(--color-electric-green)]/10 dark:to-[var(--color-teal-blue)]/10 rounded-2xl p-6 border border-[var(--color-teal-blue)]/40 dark:border-[var(--color-electric-green)]/20 hover:border-[var(--color-electric-green)]/60 transition-colors">
           <h3 className="text-lg font-bold mb-4 flex items-center text-[var(--color-teal-blue)] dark:text-[var(--color-electric-green)]">
             <span className="mr-2">💡</span> Technical Versatility & Interests
           </h3>
@@ -178,7 +178,7 @@ export function Technologies({ domains }: { domains: any[] }) {
               "Open Source Contributing",
               "Cloud Security"
             ].map(item => (
-              <span key={item} className="px-3 py-1 bg-white/50 dark:bg-[var(--color-teal-blue)]/10 border border-[var(--color-teal-blue)]/30 dark:border-[var(--color-teal-blue)]/30 rounded-lg text-sm text-teal-800 dark:text-[var(--color-lite-green)]">
+              <span key={item} className="px-3 py-1 bg-[var(--bg-subtle)] border border-[var(--border-color)] rounded-lg text-sm text-[var(--color-teal-blue)] dark:text-[var(--color-lite-green)]">
                 {item}
               </span>
             ))}

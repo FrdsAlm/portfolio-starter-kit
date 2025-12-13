@@ -7,7 +7,8 @@ import PortableText from 'app/components/PortableText'
 import SanityImage from 'app/components/SanityImage'
 
 export async function generateMetadata({ params }) {
-  const post = await client.fetch(postQuery, { slug: params.slug }, { next: { tags: ['portfolio'] } })
+  const { slug } = await params
+  const post = await client.fetch(postQuery, { slug }, { next: { tags: ['portfolio'] } })
   if (!post) return {}
   const { title, description, publishedAt: publishedTime } = post
   const ogImage = `${baseUrl}/og?title=${encodeURIComponent(title)}`
@@ -32,7 +33,8 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Blog({ params }) {
-  const post = await client.fetch(postQuery, { slug: params.slug }, { next: { tags: ['portfolio'] } })
+  const { slug } = await params
+  const post = await client.fetch(postQuery, { slug }, { next: { tags: ['portfolio'] } })
   if (!post) notFound()
 
   return (
@@ -54,18 +56,18 @@ export default async function Blog({ params }) {
           }),
         }}
       />
-      <h1 className="title font-semibold text-2xl tracking-tighter">
+      <h1 className="title font-semibold text-2xl tracking-tighter text-[var(--text-primary)]">
         {post.title}
       </h1>
       <div className="flex justify-between items-center mt-2 mb-8 text-sm">
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
+        <p className="text-sm text-[var(--text-muted)]">
           {formatDate(post.publishedAt)}
         </p>
       </div>
       {post.categories && post.categories.length > 0 && (
         <div className="flex gap-2 flex-wrap mb-8">
           {post.categories.map(cat => (
-            <span key={cat} className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-2 py-0.5 rounded">
+            <span key={cat} className="text-xs bg-[var(--bg-subtle)] text-[var(--text-muted)] px-2 py-0.5 rounded">
               #{cat}
             </span>
           ))}

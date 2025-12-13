@@ -8,7 +8,7 @@ export function BlogSection({ posts }: { posts: any[] }) {
         <h2 className="text-2xl font-bold">Latest Blog Posts</h2>
         <Link
           href="/blog"
-          className="text-blue-600 dark:text-blue-400 hover:underline text-sm"
+          className="text-[var(--text-highlight)] hover:underline text-sm"
         >
           View all posts →
         </Link>
