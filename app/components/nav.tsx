@@ -1,69 +1,68 @@
 'use client';
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { usePathname } from 'next/navigation'
+import { useEffect } from 'react'
 import { ThemeToggle } from './ThemeToggle'
 
-const navItems = {
-  '/': {
-    name: 'Home',
-  },
-  '/blog': {
-    name: 'Blog',
-  },
-  'https://firdous.dev': {
-    name: 'Dev Website',
-  },
-}
-
 export function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
+  const pathname = usePathname()
+  const isBlog = pathname?.startsWith('/blog')
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Secret shortcut: Ctrl/Cmd + Shift + S -> Go to Studio
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 's') {
+        e.preventDefault()
+        window.location.href = '/studio'
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
 
   return (
     <nav className="mb-16">
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          {/* Hamburger Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="flex flex-col justify-center items-center w-8 h-8 space-y-1 focus:outline-none group"
-            aria-label="Toggle menu"
+        {/* Profile / Blog Toggle */}
+        <div className="relative inline-flex items-center h-10 rounded-full border border-neutral-300 dark:border-white p-1">
+          {/* Slider Background */}
+          <div
+            className={`
+              absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-full transition-all duration-300 ease-in-out
+              bg-neutral-800 dark:bg-white
+              ${isBlog ? 'translate-x-[100%]' : 'translate-x-0'}
+            `}
+          />
+
+          {/* Profile Link */}
+          <Link
+            href="/"
+            className={`
+              relative z-10 w-20 text-center text-sm font-medium transition-colors duration-300
+              ${!isBlog
+                ? 'text-white dark:text-black'
+                : 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white'
+              }
+            `}
           >
-            <span className={`block w-6 h-0.5 bg-[var(--text-primary)] transition-all duration-300 ease-out ${isOpen ? 'rotate-45 translate-y-2' : ''}`} />
-            <span className={`block w-6 h-0.5 bg-[var(--text-primary)] transition-all duration-300 ease-out ${isOpen ? 'opacity-0' : ''}`} />
-            <span className={`block w-6 h-0.5 bg-[var(--text-primary)] transition-all duration-300 ease-out ${isOpen ? '-rotate-45 -translate-y-2' : ''}`} />
-          </button>
+            Profile
+          </Link>
 
-          {/* Menu Items - Horizontal beside hamburger */}
-          <div className={`
-            flex items-center space-x-6 overflow-hidden transition-all duration-500 ease-out
-            ${isOpen ? 'max-w-md opacity-100' : 'max-w-0 opacity-0'}
-          `}>
-            {Object.entries(navItems).map(([path, { name }], index) => {
-              const isExternal = path.startsWith('http')
-
-              return (
-                <Link
-                  key={path}
-                  href={path}
-                  target={isExternal ? '_blank' : undefined}
-                  rel={isExternal ? 'noopener noreferrer' : undefined}
-                  onClick={() => setIsOpen(false)}
-                  className={`
-                    text-[var(--text-secondary)] hover:text-[var(--color-teal-blue)] dark:hover:text-[var(--color-electric-green)]
-                    font-medium transition-all duration-300 ease-out whitespace-nowrap
-                    hover:scale-105 transform
-                    ${isOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}
-                  `}
-                  style={{
-                    transitionDelay: isOpen ? `${index * 100}ms` : '0ms'
-                  }}
-                >
-                  {name}
-                </Link>
-              )
-            })}
-          </div>
+          {/* Blog Link */}
+          <Link
+            href="/blog"
+            className={`
+              relative z-10 w-20 text-center text-sm font-medium transition-colors duration-300
+              ${isBlog
+                ? 'text-white dark:text-black'
+                : 'text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white'
+              }
+            `}
+          >
+            Blog
+          </Link>
         </div>
 
         {/* Theme Toggle - Right side */}

@@ -1,10 +1,10 @@
 import { notFound } from 'next/navigation'
-import { formatDate } from 'app/blog/date'
-import { baseUrl } from 'app/sitemap'
+import { formatDate } from '../date'
+import { baseUrl } from '../../../sitemap'
 import { client } from '@/sanity/lib/client'
 import { postQuery } from '@/sanity/lib/queries'
-import PortableText from 'app/components/PortableText'
-import SanityImage from 'app/components/SanityImage'
+import PortableText from '../../../components/PortableText'
+import SanityImage from '../../../components/SanityImage'
 
 export async function generateMetadata({ params }) {
   const { slug } = await params

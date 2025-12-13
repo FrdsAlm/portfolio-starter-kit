@@ -1,4 +1,4 @@
-import { BlogList } from 'app/components/BlogList'
+import { BlogList } from '../../components/BlogList'
 import { client } from '@/sanity/lib/client'
 import { postsQuery } from '@/sanity/lib/queries'
 

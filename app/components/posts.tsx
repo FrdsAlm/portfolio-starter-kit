@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { formatDate } from 'app/blog/date'
+import { formatDate } from '../(website)/blog/date'
 export function BlogPosts({ posts }: { posts: any[] }) {
   const allBlogs = posts || [];
 

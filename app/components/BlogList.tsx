@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { formatDate } from 'app/blog/date';
+import { formatDate } from '../(website)/blog/date';
 
 interface BlogPost {
     _id: string;
