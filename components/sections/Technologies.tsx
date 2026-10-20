@@ -1,189 +1,119 @@
+const fallbackDomains = [
+  {
+    _id: 'sap',
+    title: 'SAP Integration Ecosystem',
+    icon: '🚀',
+    width: 'full',
+    colorTheme: 'blue',
+    items: [
+      'SAP Cloud Integration (CPI)',
+      'API Management & Security',
+      'Open Connectors',
+      'Integration Advisor',
+      'Advanced Event Mesh',
+      'SAP BTP Administration',
+      'Identity Auth (IAS/IPS)',
+      'Cloud Connector Config',
+      'Transport Management',
+      'Hybrid Landscapes',
+      'SAP Customer Data Platform',
+      'SAP Marketing Cloud',
+      'SAP Build Process Automation',
+      'SAP Commerce Cloud',
+      'SAP ERP / S/4HANA',
+    ],
+  },
+  {
+    _id: 'marketing',
+    title: 'Marketing Automation & CRM',
+    icon: '📢',
+    width: '1/2',
+    items: [
+      'Adobe Marketo Engage',
+      'Outreach.io Integration',
+      'HubSpot API',
+      'LinkedIn Ads API',
+      'Google Search Console API',
+      'Marketing Data Management',
+      'Lead Scoring Models',
+      'Campaign Orchestration',
+    ],
+  },
+  {
+    _id: 'procurement',
+    title: 'Procurement & Supply Chain',
+    icon: '🏢',
+    width: '1/2',
+    items: [
+      'Enterprise Procurement',
+      'Ivalua Integration',
+      'Supply Chain Optimization',
+      'B2B Integration (EDI)',
+      'Vendor Management',
+      'Purchase Order Workflows',
+      'Invoice Processing',
+      'ETL / EAI Processes',
+    ],
+  },
+  {
+    _id: 'versatility',
+    title: 'Technical Versatility & Interests',
+    icon: '💡',
+    width: 'full',
+    items: [
+      'Android App Development',
+      'Gemini AI API',
+      'Azure Administration',
+      'Python Scripting',
+      'Web Performance',
+      'System Design',
+      'Open Source Contributing',
+      'Cloud Security',
+    ],
+  },
+];
+
 export function Technologies({ domains }: { domains: any[] }) {
-  if (domains && domains.length > 0) {
-    return (
-      <section className="mb-20">
-        <h2 className="text-3xl font-bold mb-10 text-center">Tech Stack & Domain Knowledge</h2>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {domains.map((domain: any) => {
-            const colSpan = {
-              'full': 'lg:col-span-12',
-              '2/3': 'lg:col-span-8',
-              '1/2': 'lg:col-span-6',
-              '1/3': 'lg:col-span-4',
-            }[domain.width as string] || 'lg:col-span-4';
+  const items = domains && domains.length > 0 ? domains : fallbackDomains;
 
-            const isBlue = domain.colorTheme === 'blue';
+  return (
+    <section className="mb-12">
+      <h2 className="text-2xl font-bold mb-6 text-[var(--text-primary)]">Tech Stack & Domain Knowledge</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {items.map((domain: any) => {
+          // Two-column grid: full-width cards span both columns, everything else takes one
+          const isWide = domain.width === 'full';
+          const isFeatured = domain.colorTheme === 'blue';
 
-            return (
-              <div
-                key={domain._id}
-                className={`${colSpan} ${isBlue
-                  ? 'bg-[var(--color-accent-bg)] dark:bg-gradient-to-br dark:from-[var(--color-electric-green)]/10 dark:to-[var(--color-teal-blue)]/10 border-[var(--color-teal-blue)]/40 dark:border-[var(--color-electric-green)]/20'
-                  : 'bg-[var(--bg-subtle)] border-[var(--border-color)]'
-                  } rounded-2xl p-8 border hover:border-[var(--color-electric-green)]/50 transition-colors group`}
-              >
-                <div className="flex items-center gap-3 mb-6">
-                  <span className={`text-3xl p-3 rounded-xl shadow-sm ${isBlue ? 'bg-white dark:bg-[var(--color-teal-blue)]/20' : 'bg-[var(--bg-primary)]'}`}>
+          return (
+            <div
+              key={domain._id}
+              className={`${isWide ? 'md:col-span-2' : ''} ${isFeatured ? 'bg-[var(--color-accent-bg)]' : ''} group rounded-xl border border-[var(--border-color)] p-6 hover:border-[var(--color-electric-green)] transition-colors duration-300`}
+            >
+              <div className="flex items-center gap-3 mb-4">
+                {domain.icon && (
+                  <span className="text-lg leading-none" aria-hidden="true">
                     {domain.icon}
                   </span>
-                  <h3 className={`text-xl font-bold ${isBlue ? 'text-[var(--color-teal-blue)] dark:text-[var(--color-electric-green)]' : 'text-[var(--text-primary)]'}`}>
-                    {domain.title}
-                  </h3>
-                </div>
-
-                <div className="flex flex-wrap gap-2">
-                  {domain.items && domain.items.map((item: string) => (
-                    <span
-                      key={item}
-                      className={`px-3 py-1 rounded-lg text-sm border ${isBlue
-                        ? 'bg-white dark:bg-[var(--color-teal-blue)]/10 border-[var(--color-teal-blue)]/40 dark:border-[var(--color-teal-blue)]/30 text-[var(--color-teal-blue)] dark:text-[var(--color-lite-green)]'
-                        : 'bg-[var(--bg-primary)] border-[var(--border-color)] text-[var(--text-secondary)]'
-                        }`}
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
+                )}
+                <h3 className={`text-lg font-semibold transition-colors ${isFeatured ? 'text-[var(--text-highlight)]' : 'text-[var(--text-primary)] group-hover:text-[var(--text-highlight)]'}`}>
+                  {domain.title}
+                </h3>
               </div>
-            );
-          })}
-        </div>
-      </section>
-    );
-  }
 
-  // Fallback Hardcoded Content
-  return (
-    <section className="mb-20">
-      <h2 className="text-3xl font-bold mb-10 text-center">Tech Stack & Domain Knowledge</h2>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Core SAP Expertise - Takes up full width on top */}
-        <div className="lg:col-span-12 bg-gradient-to-br from-[#00B9F2]/10 to-[#1661BE]/10 dark:from-[#00B9F2]/10 dark:to-[#1661BE]/10 rounded-2xl p-8 border border-[#00B9F2]/20 dark:border-[#00B9F2]/20">
-          <div className="flex items-center gap-3 mb-6">
-            <span className="text-3xl bg-white dark:bg-[#1661BE]/20 p-3 rounded-xl shadow-sm">
-              🚀
-            </span>
-            <div>
-              <h3 className="text-2xl font-bold text-[#1661BE] dark:text-[#00B9F2]">
-                SAP Integration Ecosystem
-              </h3>
-              <p className="text-[#0C7ECF] dark:text-[#00B9F2]/80">
-                Core Specialization & Enterprise Architecture
-              </p>
+              <div className="flex flex-wrap gap-2">
+                {domain.items?.map((item: string) => (
+                  <span
+                    key={item}
+                    className="px-2.5 py-0.5 text-xs font-medium bg-[var(--bg-subtle)] text-[var(--text-muted)] rounded-md border border-[var(--border-color)]"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <h4 className="font-semibold text-[#1661BE] dark:text-[#00B9F2] mb-3 flex items-center">
-                <span className="w-2 h-2 rounded-full bg-[#00B9F2] mr-2"></span>
-                Integration Suite
-              </h4>
-              <ul className="space-y-2 text-[var(--text-secondary)] text-sm">
-                <li>• SAP Cloud Integration (CPI)</li>
-                <li>• API Management & Security</li>
-                <li>• Open Connectors</li>
-                <li>• Integration Advisor</li>
-                <li>• Advanced Event Mesh</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-[#1661BE] dark:text-[#00B9F2] mb-3 flex items-center">
-                <span className="w-2 h-2 rounded-full bg-[#00B9F2] mr-2"></span>
-                Cloud Administration
-              </h4>
-              <ul className="space-y-2 text-[var(--text-secondary)] text-sm">
-                <li>• SAP BTP Administration</li>
-                <li>• Identity Auth (IAS/IPS)</li>
-                <li>• Cloud Connector Config</li>
-                <li>• Transport Management</li>
-                <li>• Hybrid Landscapes</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-[#1661BE] dark:text-[#00B9F2] mb-3 flex items-center">
-                <span className="w-2 h-2 rounded-full bg-[#00B9F2] mr-2"></span>
-                Extended SAP Portfolio
-              </h4>
-              <ul className="space-y-2 text-[var(--text-secondary)] text-sm">
-                <li>• SAP Customer Data Platform</li>
-                <li>• SAP Marketing Cloud</li>
-                <li>• SAP Build Process Automation</li>
-                <li>• SAP Commerce Cloud</li>
-                <li>• SAP ERP / S/4HANA</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        {/* Domain Expertise Columns */}
-        <div className="lg:col-span-6 bg-[var(--color-accent-bg)] dark:bg-gradient-to-br dark:from-[var(--color-electric-green)]/10 dark:to-[var(--color-teal-blue)]/10 rounded-2xl p-6 border border-[var(--color-teal-blue)]/40 dark:border-[var(--color-electric-green)]/20 hover:border-[var(--color-electric-green)]/60 transition-colors">
-          <h3 className="text-lg font-bold mb-4 flex items-center text-[var(--color-teal-blue)] dark:text-[var(--color-electric-green)]">
-            <span className="mr-2">📢</span> Marketing Automation & CRM
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            {[
-              "Adobe Marketo Engage",
-              "Outreach.io Integration",
-              "HubSpot API",
-              "LinkedIn Ads API",
-              "Google Search Console API",
-              "Marketing Data Management",
-              "Lead Scoring Models",
-              "Campaign Orchestration"
-            ].map(item => (
-              <span key={item} className="px-3 py-1 bg-[var(--bg-subtle)] border border-[var(--border-color)] rounded-lg text-sm text-[var(--color-teal-blue)] dark:text-[var(--color-lite-green)]">
-                {item}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className="lg:col-span-6 bg-[var(--color-accent-bg)] dark:bg-gradient-to-br dark:from-[var(--color-electric-green)]/10 dark:to-[var(--color-teal-blue)]/10 rounded-2xl p-6 border border-[var(--color-teal-blue)]/40 dark:border-[var(--color-electric-green)]/20 hover:border-[var(--color-electric-green)]/60 transition-colors">
-          <h3 className="text-lg font-bold mb-4 flex items-center text-[var(--color-teal-blue)] dark:text-[var(--color-electric-green)]">
-            <span className="mr-2">🏢</span> Procurement & Supply Chain
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            {[
-              "Enterprise Procurement",
-              "Ivalua Integration",
-              "Supply Chain Optimization",
-              "B2B Integration (EDI)",
-              "Vendor Management",
-              "Purchase Order Workflows",
-              "Invoice Processing",
-              "ETL / EAI Processes"
-            ].map(item => (
-              <span key={item} className="px-3 py-1 bg-[var(--bg-subtle)] border border-[var(--border-color)] rounded-lg text-sm text-[var(--color-teal-blue)] dark:text-[var(--color-lite-green)]">
-                {item}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Technical Versatility - Full Width Bottom */}
-        <div className="lg:col-span-12 bg-[var(--color-accent-bg)] dark:bg-gradient-to-br dark:from-[var(--color-electric-green)]/10 dark:to-[var(--color-teal-blue)]/10 rounded-2xl p-6 border border-[var(--color-teal-blue)]/40 dark:border-[var(--color-electric-green)]/20 hover:border-[var(--color-electric-green)]/60 transition-colors">
-          <h3 className="text-lg font-bold mb-4 flex items-center text-[var(--color-teal-blue)] dark:text-[var(--color-electric-green)]">
-            <span className="mr-2">💡</span> Technical Versatility & Interests
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            {[
-              "Android App Development",
-              "Gemini AI API",
-              "Azure Administration",
-              "Python Scripting",
-              "Web Performance",
-              "System Design",
-              "Open Source Contributing",
-              "Cloud Security"
-            ].map(item => (
-              <span key={item} className="px-3 py-1 bg-[var(--bg-subtle)] border border-[var(--border-color)] rounded-lg text-sm text-[var(--color-teal-blue)] dark:text-[var(--color-lite-green)]">
-                {item}
-              </span>
-            ))}
-          </div>
-        </div>
+          );
+        })}
       </div>
     </section>
   );
