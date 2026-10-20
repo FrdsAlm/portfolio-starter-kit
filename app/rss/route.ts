@@ -2,6 +2,14 @@ import { baseUrl } from 'app/sitemap'
 import { client } from '@/sanity/lib/client'
 import { postsQuery } from '@/sanity/lib/queries'
 
+const escapeXml = (value: string) =>
+  value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;')
+
 export async function GET() {
   const allBlogs = await client.fetch(postsQuery)
 
@@ -10,9 +18,9 @@ export async function GET() {
     .map(
       (post) =>
         `<item>
-          <title>${post.title}</title>
-          <link>${baseUrl}/blog/${post.slug}</link>
-          <description>${post.description || ''}</description>
+          <title>${escapeXml(post.title || '')}</title>
+          <link>${escapeXml(`${baseUrl}/blog/${post.slug}`)}</link>
+          <description>${escapeXml(post.description || '')}</description>
           <pubDate>${new Date(post.publishedAt).toUTCString()}</pubDate>
         </item>`
     )

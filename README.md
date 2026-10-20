@@ -1,6 +1,6 @@
 # Modern Portfolio & Blog with Sanity CMS
 
-A high-performance, dynamic portfolio website built with **Next.js 14**, **Tailwind CSS**, and **Sanity CMS**.
+A high-performance, dynamic portfolio website built with **Next.js 16**, **Tailwind CSS**, and **Sanity CMS**.
 
 ## 🚀 Features
 
@@ -23,7 +23,7 @@ A high-performance, dynamic portfolio website built with **Next.js 14**, **Tailw
 
 ## 🛠️ Tech Stack
 
--   **Framework**: [Next.js 14](https://nextjs.org/) (App Router)
+-   **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
 -   **CMS**: [Sanity.io](https://www.sanity.io/)
 -   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 -   **Deployment**: [Vercel](https://vercel.com/)
@@ -52,6 +52,7 @@ NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
 NEXT_PUBLIC_SANITY_DATASET=production
 NEXT_PUBLIC_SANITY_API_VERSION=2024-12-04
 SANITY_REVALIDATE_SECRET=your_secret_token
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
 ```
 
 ### 4. Run Locally
