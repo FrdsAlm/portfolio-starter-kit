@@ -75,6 +75,15 @@ To enable instant updates without API polling:
     -   **Secret**: Use the same string as `SANITY_REVALIDATE_SECRET` in your env vars.
 3.  **Disable** "Drafts" in the webhook settings.
 
+## ✏️ Scripted Content Updates
+
+`scripts/update-content.mjs` applies a one-off content update to Sanity (bio, Accenture roles, skills, tech cards). It needs an Editor token from **Sanity Manage** -> **API** -> **Tokens**:
+
+```bash
+SANITY_WRITE_TOKEN=your_token node scripts/update-content.mjs          # preview
+SANITY_WRITE_TOKEN=your_token node scripts/update-content.mjs --apply  # write
+```
+
 ## 📄 License
 
 © 2024 Firdous Alam. Built with Next.js, Sanity & Google Antigravity.

@@ -8,7 +8,7 @@ export function ProfileHeader({ profile }: { profile: any }) {
   const data = {
     name: profile?.name || "Firdous Alam",
     headline: profile?.headline || "SAP Integration Specialist & Middleware Expert",
-    shortBio: profile?.shortBio || "Results-driven specialist with 3+ years of experience designing seamless data integration solutions. Expert in SAP Integration Suite, middleware technologies, and enterprise architecture.",
+    shortBio: profile?.shortBio || "Results-driven specialist with 5+ years of experience designing seamless data integration solutions. Expert in SAP Integration Suite, middleware technologies, and enterprise architecture, with hands-on SAP Customer Data Platform experience spanning identity resolution, customer segmentation, data activation, and privacy compliance.",
     email: profile?.email || "email@firdous.dev",
     linkedin: profile?.linkedin || "https://www.linkedin.com/in/firdous-alam/",
     profileImage: profile?.profileImage,

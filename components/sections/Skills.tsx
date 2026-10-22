@@ -6,6 +6,8 @@ export function Skills({ skills }: { skills: any[] }) {
     { name: "Cloud Connector", icon: "🔌" },
     { name: "Integration Advisor", icon: "🤖" },
     { name: "Advance Event Mesh", icon: "📨" },
+    { name: "SAP Customer Data Platform", icon: "🧩" },
+    { name: "Ivalua Integration", icon: "🏢" },
   ];
 
   const fallbackRow2 = [
@@ -15,6 +17,8 @@ export function Skills({ skills }: { skills: any[] }) {
     { name: "Groovy Scripting", icon: "📝" },
     { name: "XSLT Mapping", icon: "🔀" },
     { name: "Java", icon: "☕" },
+    { name: "Customer Segmentation", icon: "🎯" },
+    { name: "Data Orchestration", icon: "🔀" },
   ];
 
   const fallbackRow3 = [
@@ -24,6 +28,9 @@ export function Skills({ skills }: { skills: any[] }) {
     { name: "Postman", icon: "🚀" },
     { name: "Git", icon: "💻" },
     { name: "CI/CD", icon: "🔄" },
+    { name: "Identity Resolution", icon: "🪪" },
+    { name: "Privacy & Compliance", icon: "🔒" },
+    { name: "Ivalua Certified", icon: "🎓" },
   ];
 
   const row1 = skills?.filter((s: any) => s.category === 'row1') || [];

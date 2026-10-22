@@ -24,6 +24,21 @@ const fallbackDomains = [
     ],
   },
   {
+    _id: 'cdp',
+    title: 'SAP Customer Data Platform',
+    icon: '🧩',
+    width: 'full',
+    items: [
+      'Data Integration & Schema Design',
+      'Identity Resolution',
+      'Customer Segmentation & Insights',
+      'Data Orchestration & Activation',
+      'Privacy & Compliance',
+      'API Integration',
+      'Administration & Monitoring',
+    ],
+  },
+  {
     _id: 'marketing',
     title: 'Marketing Automation & CRM',
     icon: '📢',
@@ -47,6 +62,7 @@ const fallbackDomains = [
     items: [
       'Enterprise Procurement',
       'Ivalua Integration',
+      'Ivalua Certified',
       'Supply Chain Optimization',
       'B2B Integration (EDI)',
       'Vendor Management',

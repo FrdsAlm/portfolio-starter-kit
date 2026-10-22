@@ -19,16 +19,16 @@ export function WorkHistory({ jobs }: { jobs: any[] }) {
       company: "Accenture",
       period: "Dec 2024 - Feb 2025",
       location: "Bengaluru, Karnataka, India",
-      description: "Specialized in SAP Cloud Integration, API Management, and enterprise application development. Worked on complex integration patterns and middleware solutions.",
-      technologies: ["SAP CPI", "API Management", "REST", "SOAP", "OData"]
+      description: "Specialized in SAP Cloud Integration, API Management, and enterprise application development. Worked on complex integration patterns and middleware solutions. Delivered SAP Customer Data Platform solutions covering identity resolution, customer segmentation and insights, data orchestration and activation, and privacy and compliance.",
+      technologies: ["SAP CPI", "API Management", "REST", "SOAP", "OData", "SAP Customer Data Platform", "Identity Resolution", "Customer Segmentation"]
     },
     {
       title: "Application Development Analyst",
       company: "Accenture",
       period: "Dec 2022 - Feb 2025",
       location: "Bengaluru, Karnataka, India",
-      description: "Designed and implemented SAP integration solutions using Cloud Integration Platform. Developed scalable integration flows for business-critical systems with expertise in mapping techniques and authentication protocols.",
-      technologies: ["SAP Cloud Integration", "API Management", "XSLT", "Groovy", "OAuth", "SAML"]
+      description: "Designed and implemented SAP integration solutions using Cloud Integration Platform. Developed scalable integration flows for business-critical systems with expertise in mapping techniques and authentication protocols. Built SAP Customer Data Platform integrations, including data integration and schema design, API integration, and administration and monitoring.",
+      technologies: ["SAP Cloud Integration", "API Management", "XSLT", "Groovy", "OAuth", "SAML", "SAP Customer Data Platform", "Schema Design"]
     },
     {
       title: "Associate Software Engineer",
